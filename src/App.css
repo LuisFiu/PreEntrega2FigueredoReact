@@ -36,3 +36,23 @@
     transform: rotate(360deg);
   }
 }
+
+.contenedor{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.caja{
+  width: 30%;
+  background-color: burlywood;
+  font-size: 2em;
+  border-radius: 1em;
+  text-align: center;
+  color: aliceblue;
+  margin: 10px;
+}
+
+img{
+  width: 100%;
+}
+
