@@ -1,24 +1,26 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-
-import Navbar from './components/navBar';
-import ItemListContainer from './components/ItemListContainer';
-
-const productos = [
-  { id: 1, nombre: "Producto 1", precio: 10.99 },
-  { id: 2, nombre: "Producto 2", precio: 19.99 },
-  { id: 3, nombre: "Producto 3", precio: 5.99 },
-  { id: 4, nombre: "Producto 4", precio: 14.99 },
-  { id: 5, nombre: "Producto 5", precio: 18.99 }
-];
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './components/Home'; 
+import About from './components/About';
+import Products from './components/products';
+import ItemDetailContainer from './components/ItemDetailContainer';
+import Navbar from './components/Navbar';
+import Footer from './components/footer';
 
 function App() {
   return (
-    <div className="App">
-      <Navbar/>
-      <ItemListContainer productos={productos} />   
-    </div>
-    
+    <Router>
+      <Navbar />
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/producto/:id" element={<ItemDetailContainer />} /> 
+        </Routes>
+      </div>
+      <Footer />
+    </Router>
   );
 }
 

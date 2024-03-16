@@ -1,4 +1,5 @@
 import CartWidget from './CartWidget';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function NavBar() {
   return (
@@ -10,16 +11,16 @@ function NavBar() {
       <div className="collapse navbar-collapse" id="navbarNav">
         <ul className="navbar-nav mr-auto">
           <li className="nav-item">
-            <a className="nav-link" href="#">Inicio</a>
+            <a className="nav-link" href="/">Inicio</a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#">Acerca</a>
+            <a className="nav-link" href="/about">Acerca</a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#">Productos</a>
+            <a className="nav-link" href="/products">Productos</a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#">Contacto</a>
+            <a className="nav-link" href="/contact">Contacto</a>
           </li>
         </ul>
         <ul className="navbar-nav">
