@@ -1,62 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import ItemCount from './ItemCount'
+import ItemCount from './ItemCount';
+import { CartContext } from './cartContext';
+import { doc, getDoc, getFirestore } from 'firebase/firestore';
+
 
 function ProductDetail() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
-
-  const productos = [
-    { 
-      id: 1, 
-      nombre: "Producto 1", 
-      stock: 20, 
-      precioOriginal: 12.99, 
-      precioConDescuento: 9.99,
-      imagen: "https://www.sabormarino.com/assets/images/default.png"
-    },
-    { 
-      id: 2, 
-      nombre: "Producto 2", 
-      stock: 15, 
-      precioOriginal: 22.99, 
-      precioConDescuento: 18.99,
-      imagen: "https://www.sabormarino.com/assets/images/default.png"
-    },
-    { 
-      id: 3, 
-      nombre: "Producto 3", 
-      stock: 30, 
-      precioOriginal: 6.99, 
-      precioConDescuento: 4.99,
-      imagen: "https://www.sabormarino.com/assets/images/default.png"
-    },
-    { 
-      id: 4, 
-      nombre: "Producto 4", 
-      stock: 25, 
-      precioOriginal: 16.99, 
-      precioConDescuento: 12.99,
-      imagen: "https://www.sabormarino.com/assets/images/default.png"
-    },
-    { 
-      id: 5, 
-      nombre: "Producto 5", 
-      stock: 10, 
-      precioOriginal: 20.99, 
-      precioConDescuento: 16.99,
-      imagen: "https://www.sabormarino.com/assets/images/default.png"
-    }
-  ];
-
-  const handleAddToCart = (quantity) => {
-    console.log(`Agregando ${quantity} unidades del producto al carrito`);
-  };
+  const { addToCart } = useContext(CartContext); // Obtener la función addToCart del contexto del carrito
 
   useEffect(() => {
-    const foundProduct = productos.find(item => item.id === parseInt(id));
-    setProduct(foundProduct);
-  }, [id, productos]);
+    const fetchData = async () => {
+      const db = getFirestore();
+      const productDoc = doc(db, 'productos', id);
+      const docSnap = await getDoc(productDoc);
+      if (docSnap.exists()) {
+        setProduct({ id: docSnap.id, ...docSnap.data() });
+      } else {
+        console.log('No such document!');
+      }
+    };
+  
+    fetchData();
+  }, [id]);
+  
+
+  const handleAddToCart = (quantity) => {
+    if (product) {
+      addToCart({ ...product, cantidad: quantity }); // Pasar un objeto con la cantidad y el producto al carrito
+    }
+  };
 
   return (
     <div className="container">

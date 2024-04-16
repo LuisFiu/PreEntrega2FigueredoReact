@@ -1,10 +1,20 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { getFirestore, collection, getDocs } from 'firebase/firestore';
 
+function ItemListContainer() {
+  const [productos, setProductos] = useState([]);
 
-function ItemListContainer(props) {
-  const { productos } = props;
+  useEffect(() => {
+    const fetchData = async () => {
+      const db = getFirestore();
+      const productosCollection = collection(db, 'productos');
+      const data = await getDocs(productosCollection);
+      setProductos(data.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+    };
 
+    fetchData();
+  }, []);
 
   return (
     <div className='container'>
